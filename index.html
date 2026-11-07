@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#F9F8F3" />
+    <title>Ecorefeitório · Conecta Caiçara</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main id="app" class="app-shell">
+      <section id="loginScreen" class="login-screen" aria-labelledby="loginTitle">
+        <div class="brand login-brand">
+          <div class="brand-mark" aria-hidden="true">
+            <img src="ecorefeitorio-logo.svg" alt="" />
+          </div>
+          <div>
+            <div class="brand-name">Ecorefeitório</div>
+            <div class="brand-caption">CONECTA CAIÇARA <span>·</span> GRUPO 2</div>
+          </div>
+        </div>
+        <div class="login-card">
+          <span class="eyebrow">ACESSO DA EQUIPE ESCOLAR</span>
+          <h1 id="loginTitle">Bem-vindo(a)<br />ao Ecorefeitório.</h1>
+          <p class="muted">Entre com seu e-mail e senha para acessar o painel de gestão.</p>
+          <form id="loginForm">
+            <label for="email">E-mail</label>
+            <input id="email" name="email" type="email" placeholder="professor@escola.com" autocomplete="username" required />
+            <label for="loginPassword">Senha</label>
+            <input id="loginPassword" name="password" type="password" placeholder="Digite sua senha" autocomplete="current-password" required />
+            <p id="loginError" class="form-error" aria-live="polite"></p>
+            <button class="button button-primary button-wide" type="submit">Entrar no Aplicativo <span aria-hidden="true">→</span></button>
+          </form>
+          <p class="login-note">Acesso destinado a professores e equipe escolar.</p>
+        </div>
+        <p class="footer-note">Alimentação consciente começa com boas escolhas.</p>
+      </section>
+
+      <section id="dashboard" class="dashboard hidden">
+        <header class="topbar">
+          <div class="brand">
+            <div class="brand-mark" aria-hidden="true">
+              <img src="ecorefeitorio-logo.svg" alt="" />
+            </div>
+            <div>
+              <div class="brand-name">Ecorefeitório</div>
+              <div class="brand-caption">CONECTA CAIÇARA <span>·</span> GRUPO 2</div>
+            </div>
+          </div>
+          <div class="header-user"><span class="status-dot"></span><span id="userEmail">Equipe escolar</span><button id="logoutButton" class="text-button" type="button">Sair</button></div>
+        </header>
+
+        <div class="content-wrap">
+          <section id="filaPage" class="page" aria-labelledby="filaTitle">
+            <div class="page-heading">
+              <div><span class="eyebrow">CONFIRMAÇÃO DA MANHÃ</span><h1 id="filaTitle">Fila de hoje</h1><p class="muted">Registre as respostas dos alunos antes do início das aulas.</p></div>
+              <div class="date-pill"><span class="date-dot"></span> Pesquisa da manhã</div>
+            </div>
+            <div class="queue-layout">
+              <article class="card response-card">
+                <span class="step-label">RESPOSTA DO ALUNO</span>
+                <h2>Vai almoçar<br />hoje?</h2>
+                <div class="menu-waste-layout">
+                  <div class="queue-menu-preview" aria-label="Cardápio do dia">
+                    <span class="step-label">CARDÁPIO DE HOJE · <span id="filaMenuDay"></span></span>
+                    <strong id="filaMenuTitle">Almoço do dia</strong>
+                    <p><span>Prato principal</span><b id="filaMenuMain">Cardápio a ser definido pela cozinha</b></p>
+                    <p><span>Acompanhamento</span><b id="filaMenuSide">—</b></p>
+                    <p><span>Salada</span><b id="filaMenuSalad">—</b></p>
+                    <p><span>Sobremesa</span><b id="filaMenuDessert">—</b></p>
+                  </div>
+                  <div class="waste-highlight" role="status"><span>Desperdício de ontem</span><strong id="yesterdayWaste">0,00 kg</strong></div>
+                </div>
+                <div class="response-actions">
+                  <button id="yesButton" class="answer-button answer-yes" type="button"><span class="answer-symbol">✓</span><span><strong>Sim, vou comer</strong><small>Confirmar refeição</small></span><span class="action-arrow">→</span></button>
+                  <button id="noButton" class="answer-button answer-no" type="button"><span class="answer-symbol">×</span><span><strong>Não vou comer</strong><small>Registrar ausência</small></span><span class="action-arrow">→</span></button>
+                  <button id="repeatButton" class="answer-button answer-repeat" type="button"><span class="answer-symbol">↻</span><span><strong>Geralmente repito a comida</strong><small>Confirmar refeição e uma porção extra</small></span><span class="action-arrow">→</span></button>
+                </div>
+                <div id="responseNotice" class="inline-notice" aria-live="polite"></div>
+              </article>
+              <article class="card summary-card">
+                <div class="card-title-row"><div><span class="step-label">RESUMO EM TEMPO REAL</span><h2>Respostas</h2></div><span class="live-indicator">AO VIVO</span></div>
+                <div class="stats-grid">
+                  <div class="stat-box stat-total"><span>Total de respostas</span><strong id="totalCount">0</strong><small>alunos registrados</small></div>
+                  <div class="stat-box"><span>Vão comer</span><strong id="yesCount">0</strong><small>refeições confirmadas</small></div>
+                  <div class="stat-box"><span>Não vão comer</span><strong id="noCount">0</strong><small>ausências registradas</small></div>
+                </div>
+                <div class="summary-foot"><span>Percentual que vai comer</span><strong id="responsePercent">0%</strong></div>
+                <div class="progress-track"><span id="responseProgress"></span></div>
+              </article>
+            </div>
+            <div class="tip-strip"><span class="tip-icon">i</span><p>As confirmações de refeição atualizam automaticamente a previsão de alimentos na Cozinha.</p></div>
+          </section>
+
+          <section id="totemPage" class="page hidden" aria-labelledby="totemTitle">
+            <div class="totem-screen">
+              <div class="totem-topline"><span class="eyebrow">EC REFEITÓRIO · SERVIÇO DE HOJE</span><button id="unlockButton" class="lock-button" type="button"><span aria-hidden="true">⌑</span> Bloquear / Sair</button></div>
+              <div class="totem-content">
+                <div class="totem-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M10 12h28l-2 29H12L10 12Z"/><path d="M17 12a7 7 0 0 1 14 0M18 23h12m-10 7h8"/></svg></div>
+                <span class="eyebrow">HORA DA MERENDA</span>
+                <h1 id="totemTitle">Qual será<br />a sua porção?</h1>
+                <p id="totemSubtitle" class="muted">Escolha uma opção para registrar seu prato.</p>
+                <div id="totemVotingArea">
+                  <div class="portion-options">
+                    <button id="smallPortion" class="portion-card" type="button"><span class="portion-plate plate-small"><i></i></span><span class="portion-copy"><strong>Pequeno</strong><small>Toque para registrar</small></span><span class="portion-arrow">→</span></button>
+                    <button id="mediumPortion" class="portion-card" type="button"><span class="portion-plate plate-medium"><i></i></span><span class="portion-copy"><strong>Médio</strong><small>Toque para registrar</small></span><span class="portion-arrow">→</span></button>
+                  </div>
+                </div>
+                <div id="totemClosedNotice" class="totem-closed-notice hidden" role="status">
+                  <strong>A fila para a cozinha já foi encerrada.</strong>
+                  <span>O registro de novas refeições fica disponível até as 10:45. Esta tela está em modo de visualização.</span>
+                </div>
+                <div id="totemNotice" class="totem-notice" aria-live="polite"></div>
+                <p class="served-today"><span id="servedTotal">0</span> pratos registrados hoje</p>
+              </div>
+              <p class="totem-footer">Obrigado por fazer escolhas conscientes.</p>
+            </div>
+          </section>
+
+          <section id="kitchenPage" class="page hidden" aria-labelledby="kitchenTitle">
+            <div class="page-heading">
+              <div><span class="eyebrow">PLANEJAMENTO DA COZINHA</span><h1 id="kitchenTitle">Painel da cozinha</h1><p class="muted">Quantidades estimadas para preparar as refeições de hoje.</p></div>
+            </div>
+            <div class="section-title-row"><div><span class="eyebrow">QUANTIDADE ESTIMADA</span><h2>Insumos necessários</h2></div><span class="unit-label">PESO TOTAL · KG</span></div>
+            <div class="ingredient-grid">
+              <article class="ingredient-card"><span class="ingredient-mark rice-mark">A</span><div><span>Arroz</span><strong id="riceAmount">0,00 <small>kg</small></strong><small id="riceRecipe" class="recipe">130 g por porção</small></div></article>
+              <article class="ingredient-card"><span class="ingredient-mark beans-mark">F</span><div><span>Feijão</span><strong id="beansAmount">0,00 <small>kg</small></strong><small id="beansRecipe" class="recipe">80 g por porção</small></div></article>
+              <article class="ingredient-card"><span class="ingredient-mark meat-mark">M</span><div><span>Carne / mistura</span><strong id="meatAmount">0,00 <small>kg</small></strong><small id="meatRecipe" class="recipe">120 g por porção</small></div></article>
+            </div>
+            <article class="card waste-entry-card">
+              <span class="eyebrow">CONTROLE DO DESPERDÍCIO</span>
+              <h2>Desperdício de hoje</h2>
+              <p class="muted">Registe a quantidade total de comida desperdiçada para acompanhar o resultado na Fila.</p>
+              <form id="wasteForm" class="waste-form"><label for="wasteInput">Desperdício total de hoje (kg)</label><div><input id="wasteInput" name="waste" type="number" min="0" step="0.01" placeholder="Ex.: 1,25" required /><button class="button button-primary" type="submit">Salvar desperdício</button></div><p id="wasteNotice" class="form-feedback" aria-live="polite"></p></form>
+            </article>
+            <article class="card report-card" aria-labelledby="reportTitle">
+              <div class="report-heading">
+                <div><span class="eyebrow">ACOMPANHAMENTO DE LONGO PRAZO</span><h2 id="reportTitle">Histórico e relatórios semanais/mensais</h2><p class="muted">Evolução do desperdício e das refeições registradas, salva neste navegador.</p></div>
+              </div>
+              <div class="report-summary" aria-live="polite">
+                <div><span>Desperdício no mês</span><strong id="monthlyWaste">0,00 kg</strong></div>
+                <div><span>Refeições no mês</span><strong id="monthlyMeals">0</strong></div>
+                <div><span>Variação semanal</span><strong id="weeklyWasteTrend">—</strong></div>
+              </div>
+              <div id="weeklyChart" class="weekly-chart" role="img" aria-label="Gráfico semanal de desperdício"></div>
+              <div class="report-table-wrap">
+                <table class="report-table">
+                  <thead><tr><th>Data</th><th>Desperdício</th><th>Refeições</th></tr></thead>
+                  <tbody id="historyTableBody"></tbody>
+                </table>
+              </div>
+              <p class="report-footnote">O total de refeições considera os pratos registrados no Totem. Os dados históricos ficam armazenados neste navegador.</p>
+            </article>
+            <article class="card menu-editor-card">
+              <div class="menu-editor-heading"><div><span class="eyebrow">GESTÃO DA COZINHA</span><h2>Cardápio semanal</h2><p class="muted">Cadastre uma refeição para cada dia da semana. O menu do dia aparece automaticamente na aba Fila.</p></div></div>
+              <form id="menuForm" class="menu-form">
+                <div class="menu-day-field"><label for="menuDayInput">Dia da semana</label><select id="menuDayInput" name="day"><option value="1">Segunda-feira</option><option value="2">Terça-feira</option><option value="3">Quarta-feira</option><option value="4">Quinta-feira</option><option value="5">Sexta-feira</option><option value="6">Sábado</option><option value="0">Domingo</option></select></div>
+                <label for="menuTitleInput">Nome da refeição</label><input id="menuTitleInput" name="title" type="text" maxlength="60" placeholder="Ex.: Almoço" required />
+                <label for="menuMainInput">Prato principal</label><input id="menuMainInput" name="main" type="text" maxlength="100" placeholder="Ex.: Arroz, feijão e frango" required />
+                <label for="menuSideInput">Acompanhamento</label><input id="menuSideInput" name="side" type="text" maxlength="100" placeholder="Ex.: Legumes refogados" />
+                <label for="menuSaladInput">Salada</label><input id="menuSaladInput" name="salad" type="text" maxlength="100" placeholder="Ex.: Alface e tomate" />
+                <label for="menuDessertInput">Sobremesa</label><input id="menuDessertInput" name="dessert" type="text" maxlength="100" placeholder="Ex.: Banana" />
+                <div class="menu-form-footer"><p id="menuNotice" class="form-feedback" aria-live="polite"></p><button class="button button-primary" type="submit">Salvar cardápio</button></div>
+              </form>
+            </article>
+            <div class="reset-row"><p>Os dados ficam neste navegador. Ao mudar o dia, as contagens são reiniciadas e o histórico de ontem é guardado. Zerar antes disso apaga os dados usados na comparação de amanhã.</p><button id="resetButton" class="button button-outline" type="button">Zerar dados do dia</button></div>
+          </section>
+
+          <section id="servedPage" class="page hidden" aria-labelledby="servedTitle">
+            <div class="page-heading">
+              <div><span class="eyebrow">ACOMPANHAMENTO AO VIVO</span><h1 id="servedTitle">Fila de pratos</h1><p class="muted">Prepare os pratos na ordem registrada no Totem.</p></div>
+              <span class="served-total-pill"><span id="kitchenServedTotal">0</span> registrados hoje</span>
+            </div>
+            <article class="card plate-queue" aria-labelledby="nextPlateTitle">
+              <span class="eyebrow">PRÓXIMO PRATO</span>
+              <div aria-live="polite" aria-atomic="true"><h2 id="nextPlateTitle">Aguardando pedido</h2><p id="queueStatus" class="muted">Quando um aluno escolher uma porção, ela aparecerá aqui.</p></div>
+              <p id="queueWaitText" class="queue-note">Cada pedido aparece por 15 segundos antes de passar automaticamente para o próximo.</p>
+
+              <h3>Na sequência</h3>
+              <ol id="plateQueue" class="plate-queue-list" start="2" aria-label="Próximos pedidos"></ol>
+              <p class="queue-note">Para acompanhar o Totem em outra aba, use o mesmo navegador neste aparelho. A fila é reiniciada ao mudar o dia.</p>
+            </article>
+            <div class="served-grid"><div class="served-card"><span class="served-mini-icon">P</span><div><span>Pequenos registrados hoje</span><strong id="smallCount">0</strong></div></div><div class="served-card"><span class="served-mini-icon medium-mini">M</span><div><span>Médios registrados hoje</span><strong id="mediumCount">0</strong></div></div></div>
+          </section>
+
+          <section id="settingsPage" class="page hidden" aria-labelledby="settingsTitle">
+            <div class="page-heading"><div><span class="eyebrow">PREFERÊNCIAS DO SISTEMA</span><h1 id="settingsTitle">Ajustes</h1><p class="muted">Gerencie o acesso seguro ao modo Totem.</p></div></div>
+            <article class="card settings-card"><div class="settings-icon" aria-hidden="true">⌑</div><div class="settings-copy"><span class="eyebrow">SEGURANÇA DO TOTEM</span><h2>Senha de professor</h2><p class="muted">Esta senha é solicitada para sair da tela de atendimento e voltar ao painel. A senha inicial é <strong>1234</strong>.</p></div><form id="pinForm" class="pin-form"><label for="newPin">Nova senha numérica</label><div class="pin-field"><input id="newPin" type="password" inputmode="numeric" pattern="[0-9]{4,8}" minlength="4" maxlength="8" placeholder="4 a 8 dígitos" required /><button class="button button-primary" type="submit">Atualizar senha</button></div><p id="pinNotice" class="form-feedback" aria-live="polite"></p></form></article>
+            <article class="card app-settings-card">
+              <div class="settings-copy"><span class="eyebrow">PERSONALIZAÇÃO DO APLICATIVO</span><h2>Funcionamento e porções</h2><p class="muted">Ajuste os parâmetros usados pelo Totem e pela previsão da cozinha. As alterações ficam salvas neste navegador.</p></div>
+              <form id="appSettingsForm" class="app-settings-form">
+                <div class="app-setting-field"><label for="votingCutoffInput">Encerrar respostas às</label><input id="votingCutoffInput" type="time" required /></div>
+                <div class="app-setting-field"><label for="plateGramsInput">Peso da porção padrão (g)</label><input id="plateGramsInput" type="number" min="1" max="2000" step="1" required /></div>
+                <div class="app-setting-field"><label for="riceGramsInput">Arroz por porção (g)</label><input id="riceGramsInput" type="number" min="0" max="2000" step="1" required /></div>
+                <div class="app-setting-field"><label for="beansGramsInput">Feijão por porção (g)</label><input id="beansGramsInput" type="number" min="0" max="2000" step="1" required /></div>
+                <div class="app-setting-field"><label for="meatGramsInput">Carne / mistura por porção (g)</label><input id="meatGramsInput" type="number" min="0" max="2000" step="1" required /></div>
+                <div class="app-setting-field"><label for="plateDisplaySecondsInput">Exibição de cada prato (segundos)</label><input id="plateDisplaySecondsInput" type="number" min="1" max="300" step="1" required /></div>
+                <div class="app-settings-footer"><p id="appSettingsNotice" class="form-feedback" aria-live="polite"></p><button class="button button-primary" type="submit">Salvar preferências</button></div>
+              </form>
+            </article>
+            <div class="settings-info"><span>i</span><p>A senha, as preferências e os dados do dia ficam armazenados apenas neste navegador. A autenticação por e-mail é uma demonstração local, sem conexão a um servidor escolar.</p></div>
+          </section>
+        </div>
+
+        <nav id="bottomNav" class="bottom-nav" aria-label="Navegação principal">
+          <button class="nav-item active" data-page="filaPage" type="button"><span class="nav-icon">⌂</span><span>Fila</span></button>
+          <button class="nav-item" data-page="totemPage" type="button"><span class="nav-icon">▱</span><span>Totem</span></button>
+          <button class="nav-item" data-page="kitchenPage" type="button"><span class="nav-icon">▤</span><span>Cozinha</span></button>
+          <button class="nav-item" data-page="servedPage" type="button"><span class="nav-icon">◉</span><span>Pratos</span></button>
+          <button class="nav-item" data-page="settingsPage" type="button"><span class="nav-icon">⚙</span><span>Ajustes</span></button>
+        </nav>
+      </section>
+
+      <div id="pinModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="pinModalTitle">
+        <form id="unlockForm" class="modal-card"><button id="closeModal" class="modal-close" type="button" aria-label="Fechar">×</button><div class="settings-icon">⌑</div><span class="eyebrow">ACESSO RESTRITO</span><h2 id="pinModalTitle">Senha do professor</h2><p class="muted">Digite a senha para sair do modo Totem.</p><label for="unlockPin">Senha numérica</label><input id="unlockPin" type="password" inputmode="numeric" autocomplete="off" placeholder="Digite sua senha" required /><p id="unlockError" class="form-error" aria-live="polite"></p><button class="button button-primary button-wide" type="submit">Desbloquear acesso</button></form>
+      </div>
+      <div id="resetModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="resetModalTitle">
+        <form id="resetForm" class="modal-card">
+          <button id="closeResetModal" class="modal-close" type="button" aria-label="Fechar">×</button>
+          <div class="settings-icon" aria-hidden="true">!</div>
+          <span class="eyebrow">CONFIRMAÇÃO DO PROFESSOR</span>
+          <h2 id="resetModalTitle">Zerar os dados de hoje?</h2>
+          <p class="muted">As respostas, os pratos e a fila de hoje serão zerados. Esta ação não pode ser desfeita. O histórico já registrado será preservado.</p>
+          <label for="resetPin">Confirme com a senha do professor</label>
+          <input id="resetPin" type="password" inputmode="numeric" autocomplete="off" placeholder="Senha numérica" required />
+          <p id="resetError" class="form-error" aria-live="polite"></p>
+          <div class="confirmation-actions">
+            <button id="cancelResetButton" class="button button-outline" type="button">Cancelar</button>
+            <button class="button button-primary" type="submit">Confirmar e zerar</button>
+          </div>
+        </form>
+      </div>
+    </main>
+    <script src="script.js"></script>
+  </body>
+</html>
